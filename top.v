@@ -20,7 +20,7 @@ module top (
     reg [17:0] rgb = 18'b100000111000110001;
 
     // increment the blink_counter every clock
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
       if(CSX == 0) SCL <= ~SCL;
       if(counter == 2) RESX <= 0;
       if(counter == LEAD_IN-2) RESX <= 1;
