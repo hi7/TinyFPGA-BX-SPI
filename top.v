@@ -20,15 +20,15 @@ module top (
     reg [17:0] rgb = 18'b100000111000110001;
 
     // increment the blink_counter every clock
-    always @(posedge CLK) begin
-      if(CSX == 0) SCL = ~SCL;
-      if(counter == 2) RESX = 0;
-      if(counter == LEAD_IN-2) RESX = 1;
+    always_ff @(posedge CLK) begin
+      if(CSX == 0) SCL <= ~SCL;
+      if(counter == 2) RESX <= 0;
+      if(counter == LEAD_IN-2) RESX <= 1;
       if(counter == LEAD_IN) CSX <= 0;
       if(index > 17) CSX <= 1;
       if(counter >= LEAD_IN) begin
         index = counter[5:1] - 3;
-        if(counter % 2 == 0) SDA = rgb[index];
+        if(counter % 2 == 0) SDA <= rgb[index];
       end
       if(index > 17) begin
         SCL <= 0;
